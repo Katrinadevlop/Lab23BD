@@ -36,55 +36,81 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="412dp"
-        android:layout_height="343dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/_dynamic">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID Доски" />
+
         <EditText
             android:id="@+id/idBoard"
             android:layout_width="300dp"
-            android:layout_height="50dp" />
+            android:layout_height="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Название доски" />
 
         <EditText
             android:id="@+id/boardName"
             android:layout_width="300dp"
-            android:layout_height="50dp" />
+            android:layout_height="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Имя игрока" />
 
         <EditText
             android:id="@+id/playerName"
             android:layout_width="300dp"
-            android:layout_height="50dp" />
+            android:layout_height="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Очки игрока" />
 
         <EditText
             android:id="@+id/score"
             android:layout_width="300dp"
-            android:layout_height="50dp" />
+            android:layout_height="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Левая сторона" />
 
         <EditText
             android:id="@+id/leftValue"
             android:layout_width="300dp"
-            android:layout_height="50dp" />
+            android:layout_height="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Правая сторона" />
 
         <EditText
             android:id="@+id/rightValue"
             android:layout_width="300dp"
-            android:layout_height="50dp" />
-
-        <EditText
-            android:id="@+id/nameBoard"
-            android:layout_width="300dp"
-            android:layout_height="50dp" />
+            android:layout_height="40dp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="410dp"
-        android:layout_height="147dp"
+        android:layout_height="75dp"
         android:gravity="center"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
@@ -110,10 +136,10 @@
         <Button
             android:id="@+id/addButton"
             android:layout_width="200dp"
-            android:onClick="addClicks"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#EF8E65"
+            android:onClick="addClicks"
             android:text="Добавить" />
 
     </LinearLayout>

@@ -28,28 +28,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"></GridView>
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+    </GridView>
 
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="413dp"
-        android:layout_height="164dp"
+        android:layout_height="220dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/_dynamic">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID игрока" />
+
         <EditText
             android:id="@+id/playerId"
             android:layout_width="300dp"
             android:layout_height="50dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Имя игрока" />
+
         <EditText
             android:id="@+id/playerName"
             android:layout_width="300dp"
             android:layout_height="50dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Счёт игрока" />
 
         <EditText
             android:id="@+id/playerScore"

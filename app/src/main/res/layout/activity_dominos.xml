@@ -8,6 +8,7 @@
     tools:context=".Activitys.DominosActivity">
 
     <TextView
+        android:layout_marginTop="20dp"
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -75,27 +76,53 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="413dp"
-        android:layout_height="164dp"
+        android:layout_height="274dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/_dynamic">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID домино" />
+
         <EditText
             android:id="@+id/idDomino"
             android:layout_width="300dp"
             android:layout_height="50dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Левая сторона" />
 
         <EditText
             android:id="@+id/leftScore"
             android:layout_width="300dp"
             android:layout_height="50dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Правая сторона" />
+
         <EditText
             android:id="@+id/rightScore"
             android:layout_width="300dp"
             android:layout_height="50dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Имя доски" />
+
+        <EditText
+            android:id="@+id/boardName"
+            android:layout_width="300dp"
+            android:layout_height="50dp" />
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

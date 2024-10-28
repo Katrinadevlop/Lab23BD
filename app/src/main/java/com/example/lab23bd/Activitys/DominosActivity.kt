@@ -10,15 +10,10 @@ import android.widget.GridView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.room.Room
-import com.example.lab23bd.Db.AppDatabase
 import com.example.lab23bd.Dao.DaoRepository
 import com.example.lab23bd.Db.Dependencies
 import com.example.lab23bd.Db.DominoesDbEntity
-import com.example.lab23bd.Db.PlayerDbEntity
 import com.example.lab23bd.R
 import kotlinx.coroutines.launch
 
@@ -33,21 +28,24 @@ class DominosActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dominos)
 
         listView = findViewById(R.id._dynamic)
-        val boardDao = Dependencies.getDatabase().getBoardDao()
-        repository = DaoRepository(boardDao)
+        repository = DaoRepository(Dependencies.getDatabase().getBoardDao())
 
         loadDominoData()
     }
 
     private fun loadDominoData() {
         lifecycleScope.launch {
-            val dominoData = repository.getAllDominoData()
-            val adapter = ArrayAdapter(
-                this@DominosActivity,
-                android.R.layout.simple_list_item_1,
-                dominoData.map { "ID: ${it.id}, Правая сторона: ${it.leftValue}, Левая сторона: ${it.rightValue}" }
-            )
-            listView.adapter = adapter
+            try {
+                val dominoData = repository.getAllDominoData()
+                val adapter = ArrayAdapter(
+                    this@DominosActivity,
+                    android.R.layout.simple_list_item_1,
+                    dominoData.map { "ID: ${it.id}, Правая сторона: ${it.leftValue}, Левая сторона: ${it.rightValue}" }
+                )
+                listView.adapter = adapter
+            } catch (e: Exception) {
+                Log.e("DominosActivity", "Ошибка загрузки данных: ${e.message}")
+            }
         }
     }
 
@@ -64,18 +62,17 @@ class DominosActivity : AppCompatActivity() {
         val dominos = DominoesDbEntity(
             id = idEditText.text.toString().toInt(),
             leftValue = leftScore.text.toString().toInt(),
-            rightValue =  rightScore.text.toString().toInt()
+            rightValue = rightScore.text.toString().toInt()
         )
 
         lifecycleScope.launch {
-            repository.insertNewDomino(dominos)
-            loadDominoData()
             try {
                 repository.insertNewDomino(dominos)
                 Log.d("DominosActivity", "Запись добавлена: ID: ${dominos.id}, Левый: ${dominos.leftValue}, Правый: ${dominos.rightValue}")
                 loadDominoData()
             } catch (e: Exception) {
                 Log.e("DominosActivity", "Ошибка при добавлении записи: ${e.message}")
+                Toast.makeText(this@DominosActivity, "Ошибка добавления: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
     }

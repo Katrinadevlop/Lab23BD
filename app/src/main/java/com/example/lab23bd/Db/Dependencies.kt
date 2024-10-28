@@ -11,10 +11,9 @@ object Dependencies {
         applicationContext = context
     }
 
-    // Создаем базу данных с помощью Lazy и предоставляем метод для доступа к ней
     private val appDatabase: AppDatabase by lazy {
         Room.databaseBuilder(applicationContext, AppDatabase::class.java, "database.db")
-            .fallbackToDestructiveMigration() // Это позволит удалить старую базу данных, если миграция отсутствует
+            .fallbackToDestructiveMigration()
             .build()
     }
 

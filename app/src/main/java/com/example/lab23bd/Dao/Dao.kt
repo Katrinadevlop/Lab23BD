@@ -21,25 +21,26 @@ interface BoardDao {
     @Insert
     fun insertNewDomino(domino: DominoesDbEntity)
 
-    @Query("SELECT board.id, dominoes_board, " +
-            "players.name_player, players.score_player, \n" +
-            "dominoes.left_value, dominoes.right_value FROM board\n" +
-            "INNER JOIN players ON board.id = players.id\n" +
-            "INNER JOIN dominoes ON board.id = dominoes.id;")
+    @Query("SELECT Board.id, Board.dominoes_board,\n" +
+            "               Players.name_player, Players.score_player,\n" +
+            "               Dominoes.left_value, Dominoes.right_value\n" +
+            "        FROM Board\n" +
+            "        INNER JOIN Players ON Board.players_id = Players.id\n" +
+            "        INNER JOIN Dominoes ON Board.dominoes_id = Dominoes.id")
     fun getAllBoardData(): List<BoardInfoTuple>
 
-    @Query("SELECT players.id, players.name_player, players.score_player FROM players\n")
+    @Query("SELECT id, name_player, score_player FROM Players")
     fun getAllPlayersData(): List<PlayersInfoTuple>
 
-    @Query("SELECT dominoes.id, dominoes.left_value, dominoes.right_value FROM dominoes\n")
+    @Query("SELECT id, left_value, right_value FROM Dominoes")
     fun getAllDominoesData(): List<DominoesInfoTuple>
 
-    @Query("DELETE FROM board WHERE id = :boardId")
+    @Query("DELETE FROM Board WHERE id = :boardId")
     fun deleteBoardDataById(boardId: Long)
 
-    @Query("DELETE FROM players WHERE id = :playerId")
+    @Query("DELETE FROM Players WHERE id = :playerId")
     fun deletePlayerDataById(playerId: Long)
 
-    @Query("DELETE FROM dominoes WHERE id = :dominoId")
+    @Query("DELETE FROM Dominoes WHERE id = :dominoId")
     fun deleteDominoDataById(dominoId: Long)
 }

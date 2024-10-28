@@ -9,11 +9,7 @@ import android.widget.GridView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.room.Room
-import com.example.lab23bd.Db.AppDatabase
 import com.example.lab23bd.Dao.DaoRepository
 import com.example.lab23bd.Db.Dependencies
 import com.example.lab23bd.Db.PlayerDbEntity
@@ -22,21 +18,14 @@ import kotlinx.coroutines.launch
 
 class PlayersActivity : AppCompatActivity() {
     private lateinit var repository: DaoRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Dependencies.init(applicationContext)
         enableEdgeToEdge()
         setContentView(R.layout.activity_players)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
-        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "database.db").build()
-        val boardDao = Dependencies.getDatabase().getBoardDao()
-        repository = DaoRepository(boardDao)
-
+        repository = DaoRepository(Dependencies.getDatabase().getBoardDao())
         loadPlayersData()
     }
 
@@ -57,9 +46,6 @@ class PlayersActivity : AppCompatActivity() {
         )
 
         lifecycleScope.launch {
-            val boardDao = Dependencies.getDatabase().getBoardDao()
-            val repository = DaoRepository(boardDao)
-
             try {
                 repository.insertNewPlayer(player)
                 Toast.makeText(this@PlayersActivity, "Игрок добавлен", Toast.LENGTH_SHORT).show()
@@ -72,25 +58,26 @@ class PlayersActivity : AppCompatActivity() {
 
     private fun loadPlayersData() {
         lifecycleScope.launch {
-            val boardDao = Dependencies.getDatabase().getBoardDao()
-            val repository = DaoRepository(boardDao)
-
-            val playerData = repository.getAllPlayersData()
-            val adapter = ArrayAdapter(
-                this@PlayersActivity,
-                android.R.layout.simple_list_item_1,
-                playerData.map { "ID: ${it.id}, Имя: ${it.namePlayer}, Очки: ${it.scorePlayer}" }
-            )
-            findViewById<GridView>(R.id._dynamic).adapter = adapter
+            try {
+                val playerData = repository.getAllPlayersData()
+                val adapter = ArrayAdapter(
+                    this@PlayersActivity,
+                    android.R.layout.simple_list_item_1,
+                    playerData.map { "ID: ${it.id}, Имя: ${it.namePlayer}, Очки: ${it.scorePlayer}" }
+                )
+                findViewById<GridView>(R.id._dynamic).adapter = adapter
+            } catch (e: Exception) {
+                Toast.makeText(this@PlayersActivity, "Ошибка загрузки данных: ${e.message}", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
-    fun openBoardTableClick(view: View){
+    fun openBoardTableClick(view: View) {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
 
-    fun openDominoesTableClick(view: View){
+    fun openDominoesTableClick(view: View) {
         val intent = Intent(this, DominosActivity::class.java)
         startActivity(intent)
     }
