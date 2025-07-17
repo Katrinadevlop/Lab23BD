@@ -1,8 +1,8 @@
-package com.example.lab23bd.Db
+package com.example.lab23bd.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.lab23bd.Dao.BoardDao
+import com.example.lab23bd.data.dao.BoardDao
 
 @Database(
     version = 2,

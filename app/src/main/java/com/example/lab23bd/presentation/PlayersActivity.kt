@@ -1,4 +1,4 @@
-package com.example.lab23bd.Activitys
+package com.example.lab23bd.presentation
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,13 +7,12 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.lab23bd.Dao.DaoRepository
-import com.example.lab23bd.Db.Dependencies
-import com.example.lab23bd.Db.PlayerDbEntity
 import com.example.lab23bd.R
+import com.example.lab23bd.data.dao.DaoRepository
+import com.example.lab23bd.data.database.DatabaseModule
+import com.example.lab23bd.data.database.PlayerDbEntity
 import kotlinx.coroutines.launch
 
 class PlayersActivity : AppCompatActivity() {
@@ -21,11 +20,10 @@ class PlayersActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Dependencies.init(applicationContext)
-        enableEdgeToEdge()
+        DatabaseModule.init(applicationContext)
         setContentView(R.layout.activity_players)
 
-        repository = DaoRepository(Dependencies.getDatabase().getBoardDao())
+        repository = DaoRepository(DatabaseModule.getDatabase().getBoardDao())
         loadPlayersData()
     }
 
@@ -34,15 +32,37 @@ class PlayersActivity : AppCompatActivity() {
         val nameEditText = findViewById<EditText>(R.id.playerName)
         val scoreEditText = findViewById<EditText>(R.id.playerScore)
 
-        if (idEditText.text.isEmpty() || nameEditText.text.isEmpty() || scoreEditText.text.isEmpty()) {
-            Toast.makeText(this, "Заполните все поля", Toast.LENGTH_LONG).show()
+        val idText = idEditText.text.toString().trim()
+        val nameText = nameEditText.text.toString().trim()
+        val scoreText = scoreEditText.text.toString().trim()
+
+        if (idText.isBlank() || nameText.isBlank() || scoreText.isBlank()) {
+            Toast.makeText(this, "Пожалуйста, заполните все поля", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        val id = idText.toIntOrNull()
+        val score = scoreText.toIntOrNull()
+
+        if (id == null || id <= 0) {
+            Toast.makeText(this, "ID должен быть положительным числом", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if (nameText.length < 2) {
+            Toast.makeText(this, "Имя должно содержать минимум 2 символа", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if (score == null || score < 0) {
+            Toast.makeText(this, "Очки должны быть неотрицательным числом", Toast.LENGTH_LONG).show()
             return
         }
 
         val player = PlayerDbEntity(
-            id = idEditText.text.toString().toInt(),
-            namePlayer = nameEditText.text.toString(),
-            scorePlayer = scoreEditText.text.toString()
+            id = id,
+            namePlayer = nameText,
+            scorePlayer = score.toString()
         )
 
         lifecycleScope.launch {
@@ -50,10 +70,17 @@ class PlayersActivity : AppCompatActivity() {
                 repository.insertNewPlayer(player)
                 Toast.makeText(this@PlayersActivity, "Игрок добавлен", Toast.LENGTH_SHORT).show()
                 loadPlayersData()
+                clearFields()
             } catch (e: Exception) {
                 Toast.makeText(this@PlayersActivity, "Ошибка добавления: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun clearFields() {
+        findViewById<EditText>(R.id.playerId).text.clear()
+        findViewById<EditText>(R.id.playerName).text.clear()
+        findViewById<EditText>(R.id.playerScore).text.clear()
     }
 
     private fun loadPlayersData() {
@@ -65,7 +92,7 @@ class PlayersActivity : AppCompatActivity() {
                     android.R.layout.simple_list_item_1,
                     playerData.map { "ID: ${it.id}, Имя: ${it.namePlayer}, Очки: ${it.scorePlayer}" }
                 )
-                findViewById<GridView>(R.id._dynamic).adapter = adapter
+                findViewById<GridView>(R.id.gridView).adapter = adapter
             } catch (e: Exception) {
                 Toast.makeText(this@PlayersActivity, "Ошибка загрузки данных: ${e.message}", Toast.LENGTH_LONG).show()
             }
@@ -73,12 +100,10 @@ class PlayersActivity : AppCompatActivity() {
     }
 
     fun openBoardTableClick(view: View) {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     fun openDominoesTableClick(view: View) {
-        val intent = Intent(this, DominosActivity::class.java)
-        startActivity(intent)
+        startActivity(Intent(this, DominoesActivity::class.java))
     }
 }

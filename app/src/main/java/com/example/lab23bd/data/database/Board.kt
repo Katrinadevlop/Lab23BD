@@ -1,4 +1,4 @@
-package com.example.lab23bd.Db
+package com.example.lab23bd.data.database
 
 data class Board (
     val dominoesId: Int,

@@ -1,9 +1,9 @@
-package com.example.lab23bd.Db
+package com.example.lab23bd.data.database
 
 import android.content.Context
 import androidx.room.Room
 
-object Dependencies {
+object DatabaseModule {
 
     private lateinit var applicationContext: Context
 

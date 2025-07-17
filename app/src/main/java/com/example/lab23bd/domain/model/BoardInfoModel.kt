@@ -1,8 +1,8 @@
-package com.example.lab23bd.Tuple
+package com.example.lab23bd.domain.model
 
 import androidx.room.ColumnInfo
 
-data class BoardInfoTuple (
+data class BoardInfoModel (
     val id: Int,
     @ColumnInfo(name = "dominoes_board") val dominoesBoard:String,
     @ColumnInfo(name = "name_player") val namePlayer: String,

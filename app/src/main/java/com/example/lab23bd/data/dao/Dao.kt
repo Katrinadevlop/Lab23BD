@@ -1,14 +1,14 @@
-package com.example.lab23bd.Dao
+package com.example.lab23bd.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.lab23bd.Db.BoardDbEntity
-import com.example.lab23bd.Db.DominoesDbEntity
-import com.example.lab23bd.Db.PlayerDbEntity
-import com.example.lab23bd.Tuple.BoardInfoTuple
-import com.example.lab23bd.Tuple.DominoesInfoTuple
-import com.example.lab23bd.Tuple.PlayersInfoTuple
+import com.example.lab23bd.data.database.BoardDbEntity
+import com.example.lab23bd.data.database.DominoesDbEntity
+import com.example.lab23bd.data.database.PlayerDbEntity
+import com.example.lab23bd.domain.model.BoardInfoModel
+import com.example.lab23bd.domain.model.DominoesInfoModel
+import com.example.lab23bd.domain.model.PlayersInfoModel
 
 @Dao
 interface BoardDao {
@@ -27,13 +27,13 @@ interface BoardDao {
             "        FROM Board\n" +
             "        INNER JOIN Players ON Board.players_id = Players.id\n" +
             "        INNER JOIN Dominoes ON Board.dominoes_id = Dominoes.id")
-    fun getAllBoardData(): List<BoardInfoTuple>
+    fun getAllBoardData(): List<BoardInfoModel>
 
     @Query("SELECT id, name_player, score_player FROM Players")
-    fun getAllPlayersData(): List<PlayersInfoTuple>
+    fun getAllPlayersData(): List<PlayersInfoModel>
 
     @Query("SELECT id, left_value, right_value FROM Dominoes")
-    fun getAllDominoesData(): List<DominoesInfoTuple>
+    fun getAllDominoesData(): List<DominoesInfoModel>
 
     @Query("DELETE FROM Board WHERE id = :boardId")
     fun deleteBoardDataById(boardId: Long)

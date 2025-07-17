@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Lab23BD</string>
+    <string name="domino_table">Таблица домино</string>
+    <string name="id_domino">ID домино</string>
+    <string name="left_side">Левая сторона</string>
+    <string name="right_side">Правая сторона</string>
+    <string name="board_name">Имя доски</string>
+    <string name="board_table">Таблица доски</string>
+    <string name="players">Игроки</string>
+    <string name="add">Добавить</string>
+    <string name="score">Счет</string>
+    <string name="name_player">Имя игрока</string>
+    <string name="board_players">Таблица игроки</string>
 </resources>

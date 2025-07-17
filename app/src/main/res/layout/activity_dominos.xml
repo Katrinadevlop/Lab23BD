@@ -5,124 +5,135 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activitys.DominosActivity">
+    android:padding="16dp"
+    tools:context=".presentation.DominoesActivity">
 
     <TextView
-        android:layout_marginTop="20dp"
         android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:gravity="center"
-        android:text="Таблица домино"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/domino_table"
+        android:textSize="24sp"
+        android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/gridView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </TextView>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp"/>
 
     <GridView
-        android:id="@+id/_dynamic"
-        android:layout_width="410dp"
-        android:layout_height="169dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.478"
+        android:id="@+id/gridView"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="8dp"
+        android:horizontalSpacing="8dp"
+        app:layout_constraintTop_toBottomOf="@id/textView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
-    </GridView>
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
-        android:layout_width="410dp"
-        android:layout_height="147dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/idDominoLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/id_domino"
+        app:layout_constraintTop_toBottomOf="@id/gridView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0">
-
-        <Button
-            android:id="@+id/boardButton"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#EF8E65"
-            android:onClick="openBoardTableClick"
-            android:text="Таблица доски" />
-
-        <Button
-            android:id="@+id/playersButton"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#EF8E65"
-            android:onClick="openPlayersTableClick"
-            android:text="Таблица игроков" />
-
-        <Button
-            android:id="@+id/addButton"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#EF8E65"
-            android:onClick="addClick"
-            android:text="Добавить" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="413dp"
-        android:layout_height="274dp"
-        android:gravity="center"
-        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/_dynamic">
+        android:layout_marginTop="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ID домино" />
-
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/idDomino"
-            android:layout_width="300dp"
-            android:layout_height="50dp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Левая сторона" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/leftScoreLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/left_side"
+        app:layout_constraintTop_toBottomOf="@id/idDominoLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/leftScore"
-            android:layout_width="300dp"
-            android:layout_height="50dp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Правая сторона" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/rightScoreLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/right_side"
+        app:layout_constraintTop_toBottomOf="@id/leftScoreLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/rightScore"
-            android:layout_width="300dp"
-            android:layout_height="50dp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Имя доски" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/boardNameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/board_name"
+        app:layout_constraintTop_toBottomOf="@id/rightScoreLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/boardName"
-            android:layout_width="300dp"
-            android:layout_height="50dp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/boardNameLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/boardButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:onClick="openBoardTableClick"
+            android:text="@string/board_table" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/playersButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:onClick="openPlayersTableClick"
+            android:text="@string/board_players" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/add" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
     namespace = "com.example.lab23bd"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.lab23bd"
@@ -16,9 +16,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        kapt {
-            arguments {arg("room.schemaLocation", "$projectDir/schemas")}
-        }
     }
 
     buildTypes {
@@ -47,7 +44,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation ("androidx.room:room-runtime:2.5.0")
-    kapt("androidx.room:room-compiler:2.5.0")
+    ksp(libs.androidx.room.compiler)
     implementation("androidx.room:room-ktx:2.5.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
